@@ -1,0 +1,30 @@
+{
+  "name": "msg.reader",
+  "version": "1.0.0",
+  "description": "The basic reader for .msg file format",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whistler-technologies/msg.reader.git"
+  },
+  "keywords": [
+    "msg",
+    "format",
+    "reader"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whistler-technologies/msg.reader/issues"
+  },
+  "homepage": "https://github.com/whistler-technologies/msg.reader#readme",
+  "dependencies": {
+    "text-encoding": "^0.7.0"
+  }
+}

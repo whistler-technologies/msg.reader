@@ -16,8 +16,10 @@
  MSG Reader
  */
 
-(function () {
+ const DataStream = require('./DataStream');
+ const { TextDecoder } = require('text-encoding');
 
+function initMsgReader() {
   // constants
   var CONST = {
     FILE_HEADER: uInt2int([0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1]),
@@ -72,12 +74,20 @@
         // example (use fields as needed)
         NAME_MAPPING: {
           // email specific
+          '001a': 'messageClass',
+          '0ede': 'messageClassName',
+          '0070': 'topic',
           '0037': 'subject',
+          '0e1d': 'subjectNormalized',
           '0c1a': 'senderName',
           '5d02': 'senderEmail',
           '1000': 'body',
           '1013': 'bodyHTML',
+          '3fd9': 'bodyTxt',
           '007d': 'headers',
+          // teams specific
+          '366d': 'threadId',
+          '1035': 'messageId',
           // attachment specific
           '3703': 'extension',
           '3704': 'fileNameShort',
@@ -86,7 +96,17 @@
           '370e': 'mimeType',
           // recipient specific
           '3001': 'name',
-          '39fe': 'email'
+          '39fe': 'email',
+          // others
+          // '0042': 'a15',  TODO: mailbox owner display name, can be useful
+          // '3662': 'a21', TODO: not sure what the id it is, should be investigated
+          // '3ffa': 'a22', TODO: the name of the last mail user to change the Message object, can be useful
+          // '0e04': 'a35', TODO: primary recipients display names list (semicolon separated), can be useful
+          // '366b': 'a64', TODO: has thread id and, sometimes message id after semicolon
+          // '4030': 'a67', TODO: looks like sender identifier
+          // '4039': 'a68', TODO: looks like display name of mailbox where the message was saved
+          // '5d0b': 'a69', TODO: looks like email address of mailbox where the message was saved
+          // '5d01': 'a81', TODO: Contains the SMTP email address format of the e–mail address of the sending mailbox owner, can be useful
         },
         CLASS_MAPPING: {
           ATTACHMENT_DATA: '3701'
@@ -559,6 +579,10 @@
     }
   };
 
-  window.MSGReader = MSGReader;
+  return MSGReader;
+}
 
-})();
+const MSGReader = initMsgReader();
+module.exports = {
+  MSGReader
+}
